@@ -1,8 +1,13 @@
+
+// old blog
+
+
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import fire from "../config/fire-config";
 import CreatePost from "../components/CreatePost";
 import Link from "next/link";
+import HamburgerMenu from "../components/HamburgerMenu";
 // link is  built in component
 
 const Home = () => {
@@ -48,6 +53,7 @@ const Home = () => {
   };
   return (
     <div>
+      <HamburgerMenu/>
       <Head>
         <title>Blog App</title>
       </Head>
