@@ -1,6 +1,4 @@
-
 // old blog
-
 
 import { useState, useEffect } from "react";
 import Head from "next/head";
@@ -8,14 +6,22 @@ import fire from "../config/fire-config";
 import CreatePost from "../components/CreatePost";
 import Link from "next/link";
 import HamburgerMenu from "../components/HamburgerMenu";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Button, Row, Col, Container } from "react-bootstrap";
+// import programData from "../Data.js";
 // link is  built in component
+const programData = [
+  { name: "w1", description: "abc", exercise: "def" },
+  { name: "w2", description: "abc", exercise: "def" },
+  { name: "w3", description: "abc", exercise: "def" },
+];
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   // array will be filled with blog entries
   const [notification, setNotification] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  
+
   fire.auth().onAuthStateChanged((user) => {
     if (user) {
       setLoggedIn(true);
@@ -36,7 +42,7 @@ const Home = () => {
         setBlogs(blogs);
       });
   }, []);
-   // useEffect will update on every render
+  // useEffect will update on every render
   // we are resading from firestore
   console.log(blogs);
 
@@ -53,11 +59,32 @@ const Home = () => {
   };
   return (
     <div>
-      <HamburgerMenu/>
+      <HamburgerMenu />
       <Head>
         <title>Blog App</title>
       </Head>
-      <h1>Blog</h1>
+      <h1>List of Workout Programs</h1>
+
+      {programData.map(
+        (item) => (
+          <Container key={item.name}>
+            {/* creating container for every item (object) */}
+            <Row>
+              <Col >{item.name}</Col>
+              <Col>
+               
+                <Button variant="primary">Go</Button>{" "}
+                <Button variant="secondary">Edit</Button>{" "}
+                <Button variant="warning">Delete</Button>{" "}
+              </Col>
+            </Row>
+          </Container>
+        )
+
+        // {console.log(item.w)}
+        // ask Zach why is it not working in own file??
+      )}
+
       {notification}
 
       {!loggedIn ? (
@@ -73,9 +100,9 @@ const Home = () => {
       ) : (
         <button onClick={handleLogout}>Logout</button>
       )}
-       {/* small menu if not user or logged out 
+      {/* small menu if not user or logged out 
       if we are logged in logout button will display*/}
-      
+
       <ul>
         {blogs.map((blog) => (
           <li key={blog.id}>
