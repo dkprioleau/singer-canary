@@ -8,6 +8,10 @@ import Link from "next/link";
 import HamburgerMenu from "../components/HamburgerMenu";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Row, Col, Container } from "react-bootstrap";
+import { FaPlay } from "react-icons/fa";
+import { GrEdit } from "react-icons/Gr";
+import { MdDelete } from "react-icons/Md";
+
 // import programData from "../Data.js";
 // link is  built in component
 const programData = [
@@ -64,18 +68,22 @@ const Home = () => {
         <title>Blog App</title>
       </Head>
       <h1>List of Workout Programs</h1>
-
       {programData.map(
         (item) => (
           <Container key={item.name}>
             {/* creating container for every item (object) */}
             <Row>
-              <Col >{item.name}</Col>
+              <Col>{item.name}</Col>
               <Col>
-               
-                <Button variant="primary">Go</Button>{" "}
-                <Button variant="secondary">Edit</Button>{" "}
-                <Button variant="warning">Delete</Button>{" "}
+                <Button variant="primary">
+                  <FaPlay title="play" />
+                </Button>{" "}
+                <Button variant="secondary">
+                  <GrEdit title="edit" />
+                </Button>{" "}
+                <Button variant="warning">
+                  <MdDelete title="play" />
+                </Button>{" "}
               </Col>
             </Row>
           </Container>
@@ -84,9 +92,7 @@ const Home = () => {
         // {console.log(item.w)}
         // ask Zach why is it not working in own file??
       )}
-
-      {notification}
-
+      <Button variant="primary">New Workout</Button> {notification}
       {!loggedIn ? (
         <div>
           <Link href="/users/register">
@@ -102,7 +108,6 @@ const Home = () => {
       )}
       {/* small menu if not user or logged out 
       if we are logged in logout button will display*/}
-
       <ul>
         {blogs.map((blog) => (
           <li key={blog.id}>
