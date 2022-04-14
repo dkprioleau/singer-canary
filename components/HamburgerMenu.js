@@ -29,6 +29,7 @@ export default function HamburgerMenu() {
 						<Nav className="justify-content-end flex-grow-1 pe-3">
 							<Nav.Link href="/">Home</Nav.Link>
 							<Nav.Link href="/CreateWorkout">Add program</Nav.Link>
+							<Nav.Link href="/TrackWorkout">Track Workout</Nav.Link>
 							<Nav.Link href="/WorkoutHistory">View history</Nav.Link>
 							<Nav.Link href="/users/login">Logout</Nav.Link>
 						</Nav>
