@@ -121,6 +121,11 @@ const Home = () => {
       we are mapping over them and now showing them in an unordered list 
       by inporting link  we are creating a dynamic url from the index page for each blog entry*/}
       {loggedIn && <CreatePost />}
+
+      {/*First few items of the List of Workout History*/}
+      
+      {/*View All Workout History Button which directs to the WorkoutHistory page*/}
+      <button onClick="window.location.href='/WorkoutHistory.js';">View All Workout History</button>
     </div>
   );
 };
