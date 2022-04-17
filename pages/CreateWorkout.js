@@ -1,13 +1,14 @@
 import HamburgerMenu from "../components/HamburgerMenu";
-import React from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button } from "react-bootstrap";
-import ExerciseList from "./ExerciseList";
+import ExerciseList from "../components/ExerciseList";
+
 
 export default function CreateWorkout() { 
   const onInput = (event) =>{
     console.log(event.target.value)
-  }
+  } 
 
   return (
     <>
