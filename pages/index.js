@@ -123,9 +123,9 @@ const Home = () => {
       {loggedIn && <CreatePost />}
 
       {/*First few items of the List of Workout History*/}
-      
+
       {/*View All Workout History Button which directs to the WorkoutHistory page*/}
-      <button onClick="window.location.href='/WorkoutHistory.js';">View All Workout History</button>
+      <Button href='/WorkoutHistory'>View All</Button>
     </div>
   );
 };
