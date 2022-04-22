@@ -5,8 +5,16 @@ import { Form, Button } from "react-bootstrap";
 import ExerciseList from "./ExerciseList";
 
 export default function CreateWorkout() { 
+  
+  const [Workout,setWorkout] = useState([]);
+
+  
   const onInput = (event) =>{
     console.log(event.target.value)
+  }
+
+  function newExercise(exercise){
+    console.log(exercise);
   }
 
   return (
@@ -17,7 +25,7 @@ export default function CreateWorkout() {
           <Form.Control type="email" placeholder="Name Workout" onChange={onInput} />
         </Form.Group>
       </Form>
-      <ExerciseList />
+      <ExerciseList onAddToWorkout={newExercise} />
       <Button variant="warning">Cancel</Button>{" "}
       <Button href="/" variant="success">
         Save
