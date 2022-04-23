@@ -3,21 +3,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { MdWarning } from "react-icons/md";
 
-function WorkoutProgram() {
+function WorkoutProgram({workout}) {
   const handleClick = () => {
     const exercisesDiv = document.querySelector(".exercises");
     const container = document.createElement("Container");
     container.innerHTML =
       "<Row><Col sm={4}>Exercise Name</Col> <Col sm={2}>Sets </Col>  <Col sm={2}>Reps</Col> <Col sm={2}>Time</Col> <Col sm={2}>Weight</Col></Row><br/>";
     exercisesDiv.appendChild(container);
-  };
+  };console.log(workout)
 
   return (
     <>
       <div>
         <h2>It is time to add exercises to your workout! </h2>
       </div>
-      <div className="exercises"></div>
+      <div className="exercises">
+        <ul>
+        {workout.map((exercise)=>{
+          return(<li key={exercise.name}>{exercise.name}</li>)
+          
+        })}
+        </ul>
+      </div>
       <Button onClick={handleClick}>Add Exercise</Button>
     </>
   );

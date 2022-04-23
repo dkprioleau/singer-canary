@@ -6,10 +6,13 @@ import ExerciseList from "../components/ExerciseList";
 import WorkoutProgram from "../components/WorkoutProgram";
 
 export default function CreateWorkout() {
-	const [Workout,setWorkout] = useState([]);
+	const [workout,setWorkout] = useState([]);
 	function newExercise(exercise){
 	   console.log(exercise);
-	 }
+	   setWorkout([...workout, exercise])
+	 } 
+
+	 
 
 	const onInput = (event) => {
 		console.log(event.target.value);
@@ -28,7 +31,7 @@ export default function CreateWorkout() {
 						/>
 					</Form.Group>
 				</Form>
-				<WorkoutProgram />
+				<WorkoutProgram workout={workout}/>
 				<ExerciseList onAddToWorkout={newExercise}/>
 				<Button variant="warning">Cancel</Button>{" "}
 				<Button href="/" variant="success">
