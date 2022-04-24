@@ -3,16 +3,14 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button, Container } from "react-bootstrap";
 import ExerciseList from "../components/ExerciseList";
-import WorkoutProgram from "../components/WorkoutProgram";
+import ViewWorkoutProgram from "../components/ViewWorkoutProgram";
 
 export default function CreateWorkout() {
-	const [workout,setWorkout] = useState([]);
-	function newExercise(exercise){
-	   console.log(exercise);
-	   setWorkout([...workout, exercise])
-	 } 
-
-	 
+	const [workout, setWorkout] = useState([]);
+	function newExercise(exercise) {
+		console.log(exercise);
+		setWorkout([...workout, exercise]);
+	}
 
 	const onInput = (event) => {
 		console.log(event.target.value);
@@ -31,8 +29,8 @@ export default function CreateWorkout() {
 						/>
 					</Form.Group>
 				</Form>
-				<WorkoutProgram workout={workout}/>
-				<ExerciseList onAddToWorkout={newExercise}/>
+				<ViewWorkoutProgram workout={workout} />
+				<ExerciseList onAddToWorkout={newExercise} />
 				<Button variant="warning">Cancel</Button>{" "}
 				<Button href="/" variant="success">
 					Save

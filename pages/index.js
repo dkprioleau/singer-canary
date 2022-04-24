@@ -58,34 +58,32 @@ const Home = () => {
 		<div>
 			<HamburgerMenu />
 			<Head>
-				<title>Blog App</title>
+				<title>Fitness App</title>
 			</Head>
 			<h1>List of Workout Programs</h1>
-			{programData.map(
-				(item) => (
-					<Container key={item.name}>
-						{/* creating container for every item (object) */}
-						<Row>
-							<Col>{item.name}</Col>
-							<Col>
-								<Button variant="primary">
-									<FaPlay title="play" />
-								</Button>{" "}
-								<Button variant="secondary">
-									<GrEdit title="edit" />
-								</Button>{" "}
-								<Button variant="warning">
-									<MdDelete title="delete" />
-								</Button>{" "}
-							</Col>
-						</Row>
-					</Container>
-				)
-
-				// {console.log(item.w)}
-				// ask Zach why is it not working in own file??
-			)}
-			<Button variant="primary">New Workout</Button> {notification}
+			{programData.map((item) => (
+				<Container key={item.name}>
+					{/* creating container for every item (object) */}
+					<Row>
+						<Col>{item.name}</Col>
+						<Col>
+							<Button variant="primary">
+								<FaPlay title="play" />
+							</Button>{" "}
+							<Button variant="secondary">
+								<GrEdit title="edit" />
+							</Button>{" "}
+							<Button variant="warning">
+								<MdDelete title="delete" />
+							</Button>{" "}
+						</Col>
+					</Row>
+				</Container>
+			))}
+			<Button variant="primary" href="/CreateWorkout">
+				New Workout
+			</Button>{" "}
+			{notification}
 			{!loggedIn ? (
 				<div>
 					<Link href="/users/register">
