@@ -12,6 +12,15 @@ export default function CreateWorkout() {
 		setWorkout([...workout, exercise]);
 	}
 
+	const editWorkout = (value, index, property) => {
+		workout[index][property] = value;
+		setWorkout([...workout]);
+	};
+
+	const save = () => {
+		console.log(workout);
+	};
+
 	const onInput = (event) => {
 		console.log(event.target.value);
 	};
@@ -29,10 +38,10 @@ export default function CreateWorkout() {
 						/>
 					</Form.Group>
 				</Form>
-				<ViewWorkoutProgram workout={workout} />
+				<ViewWorkoutProgram workout={workout} editWorkout={editWorkout} />
 				<ExerciseList onAddToWorkout={newExercise} />
 				<Button variant="warning">Cancel</Button>{" "}
-				<Button href="/" variant="success">
+				<Button variant="success" onClick={save}>
 					Save
 				</Button>{" "}
 			</Container>

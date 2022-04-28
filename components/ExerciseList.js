@@ -16,15 +16,15 @@ export default function ExerciseList({ onAddToWorkout }) {
 
 		fetch("https://exercisedb.p.rapidapi.com/exercises", options)
 			.then((response) => response.json())
-			.then((response) => setExercises(response))
+			.then((response) => setExercises(response.slice(0, 10)))
 			// can only display in then because that is the only place where we have access to response
 			.catch((err) => console.error(err));
 	}, []);
 
-	function handleAddToWorkout(exercise, index) {
+	const handleAddToWorkout = (exercise, index) => {
 		onAddToWorkout(exercise, index);
 		console.log(exercise, index);
-	}
+	};
 
 	return (
 		<>
@@ -39,7 +39,9 @@ export default function ExerciseList({ onAddToWorkout }) {
 							<Col>
 								<Button
 									variant="primary"
-									onClick={() => handleAddToWorkout(exercise.name, index)}
+									onClick={() =>
+										handleAddToWorkout({ name: exercise.name }, index)
+									}
 								>
 									Add to workout
 								</Button>{" "}
@@ -50,27 +52,4 @@ export default function ExerciseList({ onAddToWorkout }) {
 			</Container>
 		</>
 	);
-
-	// return (
-	//   <>
-	//       <Container>
-	//         <h3>List of Exercises</h3>
-	//         {exercises.map((exercise) =>
-
-	//               <Row key={exercise.id}>
-	//           <Col >
-	//             <ListGroup>
-	//               <ListGroup.Item>{exercise.name}</ListGroup.Item>
-	//             </ListGroup>
-	//           </Col>
-	//           <Col>
-	//             {" "}
-	//             <Button variant="primary" onClick={handleAddToWorkout}>Add to workout</Button>{" "}
-	//           </Col>
-	//         </Row>
-	//         }
-	//        </Container>
-
-	//   </>
-	// );
 }
