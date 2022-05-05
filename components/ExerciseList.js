@@ -4,6 +4,7 @@ import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
 
 export default function ExerciseList({ onAddToWorkout }) {
 	const [exercises, setExercises] = useState([]);
+	const [data, setData] = useState("");
 
 	useEffect(() => {
 		const options = {
@@ -14,6 +15,8 @@ export default function ExerciseList({ onAddToWorkout }) {
 			},
 		};
 
+		const handleAddExercises =()=>{}
+			
 		fetch("https://exercisedb.p.rapidapi.com/exercises", options)
 			.then((response) => response.json())
 			.then((response) => setExercises(response.slice(0, 10)))
