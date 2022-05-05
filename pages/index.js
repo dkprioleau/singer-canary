@@ -30,13 +30,14 @@ const Home = () => {
 	useEffect(() => {
 		fire
 			.firestore()
-			.collection("blog")
+			.collection("workout")
 			.onSnapshot((snap) => {
-				const blogs = snap.docs.map((doc) => ({
+				const workout = snap.docs.map((doc) => ({
 					id: doc.id,
 					...doc.data(),
 				}));
-				setBlogs(blogs);
+				
+				console.log(workout)
 			});
 	}, []);
 	// useEffect will update on every render

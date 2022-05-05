@@ -3,7 +3,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { MdWarning } from "react-icons/md";
 
-function ViewWorkoutProgram({ workout, editWorkout }) {
+function ViewWorkoutProgram({ workout, editWorkout, handleAddExercises }) {
+	// const handleClick =(e)=>{ 
+	// 	return(
+	// 		<CreateWorkout/>
+	// 	)
+	// }
 	const editSets = (e, index) => {
 		editWorkout(e.target.value, index, "sets");
 	};
@@ -84,7 +89,8 @@ function ViewWorkoutProgram({ workout, editWorkout }) {
 					})}
 				</ul> */}
 
-			<Button>Add Exercise</Button>
+			<Button onClick={handleAddExercises}>Add Exercise</Button>
+			{/* onclick shows list of exercises */}
 		</>
 	);
 }
