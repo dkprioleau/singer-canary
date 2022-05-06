@@ -1,35 +1,56 @@
 import HamburgerMenu from "../components/HamburgerMenu";
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Form, Button } from "react-bootstrap";
-import ExerciseList from "./ExerciseList";
+import { Form, Button, Container } from "react-bootstrap";
+import ExerciseList from "../components/ExerciseList";
+import ViewWorkoutProgram from "../components/ViewWorkoutProgram";
 
-export default function CreateWorkout() { 
-  
-  const [Workout,setWorkout] = useState([]);
+export default function CreateWorkout() {
+	const [workout, setWorkout] = useState([]);
+	function newExercise(exercise) {
+		console.log(exercise);
+		setWorkout([...workout, exercise]);
+	}
 
-  
-  const onInput = (event) =>{
-    console.log(event.target.value)
-  }
+	const editWorkout = (value, index, property) => {
+		workout[index][property] = value;
+		setWorkout([...workout]);
+	};
 
-  function newExercise(exercise){
-    console.log(exercise);
-  }
+	const save = () => {//writing to Firebase
+		console.log(workout);
+		fire.firestore()
+			.collection('workout')
+			.add({
+				workout: workout,
+			});
 
-  return (
-    <>
-      <HamburgerMenu />
-      <Form>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-          <Form.Control type="email" placeholder="Name Workout" onChange={onInput} />
-        </Form.Group>
-      </Form>
-      <ExerciseList onAddToWorkout={newExercise} />
-      <Button variant="warning">Cancel</Button>{" "}
-      <Button href="/" variant="success">
-        Save
-      </Button>{" "}
-    </>
-  );
+	};
+
+	const onInput = (event) => {
+		console.log(event.target.value);
+	};
+
+	return (
+		<>
+			<HamburgerMenu />
+			<Container>
+				<Form>
+					<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+						<Form.Control
+							type="email"
+							placeholder="Name Workout"
+							onChange={onInput}
+						/>
+					</Form.Group>
+				</Form>
+				<ViewWorkoutProgram workout={workout} editWorkout={editWorkout} />
+				<ExerciseList onAddToWorkout={newExercise} />
+				<Button variant="warning">Cancel</Button>{" "}
+				<Button variant="success" onClick={save}>
+					Save
+				</Button>{" "}
+			</Container>
+		</>
+	);
 }
