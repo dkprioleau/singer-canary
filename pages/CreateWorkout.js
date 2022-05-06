@@ -19,6 +19,12 @@ export default function CreateWorkout() {
 
 	const save = () => {
 		console.log(workout);
+		fire.firestore()
+			.collection('workout')
+			.add({
+				workout: workout,
+			});
+
 	};
 
 	const onInput = (event) => {
