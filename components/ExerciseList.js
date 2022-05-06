@@ -4,7 +4,6 @@ import { Container, Row, Col, ListGroup, Button } from "react-bootstrap";
 
 export default function ExerciseList({ onAddToWorkout }) {
 	const [exercises, setExercises] = useState([]);
-	const [data, setData] = useState("");
 
 	useEffect(() => {
 		const options = {
