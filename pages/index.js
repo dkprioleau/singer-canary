@@ -1,31 +1,16 @@
-// old blog
-
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import fire from "../config/fire-config";
-import CreatePost from "../components/CreatePost";
-import Link from "next/link";
 import HamburgerMenu from "../components/HamburgerMenu";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Row, Col, Container } from "react-bootstrap";
-import { programData } from "../Data.js";
 import { FaPlay } from "react-icons/fa";
 import { GrEdit } from "react-icons/Gr";
 import { MdDelete } from "react-icons/Md";
+import Styles from "../styles/home.module.css";
 
 const Home = () => {
-	const [blogs, setBlogs] = useState([]);
-	// array will be filled with blog entries
-	const [notification, setNotification] = useState("");
-	const [loggedIn, setLoggedIn] = useState(false);
-
-	fire.auth().onAuthStateChanged((user) => {
-		if (user) {
-			setLoggedIn(true);
-		} else {
-			setLoggedIn(false);
-		}
-	});
+	const [workout, setWorkout] = useState([]);
 
 	useEffect(() => {
 		fire
@@ -36,87 +21,110 @@ const Home = () => {
 					id: doc.id,
 					...doc.data(),
 				}));
-				
-				console.log(workout)
+				console.log(workout);
+				setWorkout(workout);
 			});
 	}, []);
-	// useEffect will update on every render
-	// we are resading from firestore
-	console.log(blogs);
 
-	const handleLogout = () => {
-		fire
-			.auth()
-			.signOut()
-			.then(() => {
-				setNotification("Logged out");
-				setTimeout(() => {
-					setNotification("");
-				}, 2000);
-			});
-	};
 	return (
 		<div>
 			<HamburgerMenu />
 			<Head>
 				<title>Fitness App</title>
 			</Head>
-			<h1>List of Workout Programs</h1>
-			{programData.map((item) => (
-				<Container key={item.name}>
-					{/* creating container for every item (object) */}
-					<Row>
-						<Col>{item.name}</Col>
-						<Col>
-							<Button variant="primary">
-								<FaPlay title="play" />
-							</Button>{" "}
-							<Button variant="secondary">
-								<GrEdit title="edit" />
-							</Button>{" "}
-							<Button variant="warning">
-								<MdDelete title="delete" />
-							</Button>{" "}
-						</Col>
-					</Row>
-				</Container>
-			))}
-			<Button variant="primary" href="/CreateWorkout">
-				New Workout
-			</Button>{" "}
-			{notification}
-			{!loggedIn ? (
-				<div>
-					<Link href="/users/register">
-						<a>Register</a>
-					</Link>{" "}
-					|
-					<Link href="/users/login">
-						<a> Login</a>
-					</Link>
-				</div>
-			) : (
-				<button onClick={handleLogout}>Logout</button>
-			)}
-			{/* small menu if not user or logged out 
-      if we are logged in logout button will display*/}
-			<ul>
-				{blogs.map((blog) => (
-					<li key={blog.id}>
-						<Link href="/blog/[id]" as={"/blog/" + blog.id}>
-							<a itemProp="hello">{blog.title}</a>
-						</Link>
-					</li>
+			<Container className={Styles.mainContainer}>
+				<h1 className={Styles.mainHeader}>List of Workout Programs</h1>
+				{workout.map((item) => (
+					<Container key={item.name} className={Styles.workoutContainer}>
+						{/* creating container for every item (object) */}
+						<Row>
+							<Col xs={9}>
+								<h4>{item.name}</h4>
+							</Col>
+							<Col xs={1}>
+								<Button variant="primary">
+									<FaPlay title="play" />
+								</Button>{" "}
+							</Col>
+							<Col xs={1}>
+								<Button variant="secondary">
+									<GrEdit title="edit" />
+								</Button>{" "}
+							</Col>
+							<Col xs={1}>
+								<Button variant="warning">
+									<MdDelete title="delete" />
+								</Button>{" "}
+							</Col>
+						</Row>
+					</Container>
 				))}
-			</ul>
-			{/* all the blogs are stored in the blog variable
-      we are mapping over them and now showing them in an unordered list 
-      by inporting link  we are creating a dynamic url from the index page for each blog entry*/}
-			{loggedIn && <CreatePost />}
-			{/*First few items of the List of Workout History*/}
-			{/*View All Workout History Button which directs to the WorkoutHistory page*/}
-			<Button href="/WorkoutHistory">View All</Button>
+				<Container>
+					<Button variant="primary" href="/CreateWorkout">
+						New Workout
+					</Button>{" "}
+					{/*First few items of the List of Workout History*/}
+					{/*View All Workout History Button which directs to the WorkoutHistory page*/}
+					<Button href="/WorkoutHistory">View All</Button>
+				</Container>
+			</Container>
 		</div>
 	);
 };
 export default Home;
+
+// Things from blog app
+// const [blogs, setBlogs] = useState([]);
+// 	// array will be filled with blog entries
+// 	const [notification, setNotification] = useState("");
+// 	const [loggedIn, setLoggedIn] = useState(false);
+
+// 	fire.auth().onAuthStateChanged((user) => {
+// 		if (user) {
+// 			setLoggedIn(true);
+// 		} else {
+// 			setLoggedIn(false);
+// 		}
+// 	});
+
+// const handleLogout = () => {
+//   fire
+//     .auth()
+//     .signOut()
+//     .then(() => {
+//       setNotification("Logged out");
+//       setTimeout(() => {
+//         setNotification("");
+//       }, 2000);
+//     });
+// };
+
+// {notification}
+// 				{!loggedIn ? (
+// 					<div>
+// 						<Link href="/users/register">
+// 							<a>Register</a>
+// 						</Link>{" "}
+// 						|
+// 						<Link href="/users/login">
+// 							<a> Login</a>
+// 						</Link>
+// 					</div>
+// 				) : (
+// 					<button onClick={handleLogout}>Logout</button>
+// 				)}
+// 				{/* small menu if not user or logged out
+//       if we are logged in logout button will display*/}
+// 				<ul>
+// 					{blogs.map((blog) => (
+// 						<li key={blog.id}>
+// 							<Link href="/blog/[id]" as={"/blog/" + blog.id}>
+// 								<a itemProp="hello">{blog.title}</a>
+// 							</Link>
+// 						</li>
+// 					))}
+// 				</ul>
+// 				{/* all the blogs are stored in the blog variable
+//       we are mapping over them and now showing them in an unordered list
+//       by inporting link  we are creating a dynamic url from the index page for each blog entry*/}
+// 				{loggedIn && <CreatePost />}

@@ -1,10 +1,9 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
-import { MdWarning } from "react-icons/md";
+import { MdDelete } from "react-icons/Md";
 
 function ViewWorkoutProgram({ workout, editWorkout }) {
-	
 	const editSets = (e, index) => {
 		editWorkout(e.target.value, index, "sets");
 	};
@@ -27,7 +26,7 @@ function ViewWorkoutProgram({ workout, editWorkout }) {
 			<Container className="exercises">
 				{workout.length === 0 ? null : (
 					<Row className="exerciseTitles">
-						<Col xs={4}>Exercise</Col>
+						<Col xs={3}>Exercise</Col>
 						<Col xs={2}>Sets</Col>
 						<Col xs={2}>Reps</Col>
 						<Col xs={2}>Weigh(lb)</Col>
@@ -38,7 +37,7 @@ function ViewWorkoutProgram({ workout, editWorkout }) {
 				{workout.map((exercise, index) => {
 					return (
 						<Row key={index}>
-							<Col xs={4}>{exercise.name}</Col>
+							<Col xs={3}>{exercise.name}</Col>
 							<Col xs={2}>
 								<Form.Group>
 									<Form.Control
@@ -75,17 +74,15 @@ function ViewWorkoutProgram({ workout, editWorkout }) {
 									/>
 								</Form.Group>
 							</Col>
+							<Col xs={1}>
+								<Button variant="warning">
+									<MdDelete title="delete" />
+								</Button>{" "}
+							</Col>
 						</Row>
 					);
 				})}
 			</Container>
-			{/* <ul>
-					{workout.map((exercise, index) => {
-						return <li key={index}>{exercise}</li>;
-					})}
-				</ul> */}
-
-			
 		</>
 	);
 }
