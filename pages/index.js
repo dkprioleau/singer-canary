@@ -10,19 +10,24 @@ import { MdDelete } from "react-icons/Md";
 import Styles from "../styles/home.module.css";
 
 const Home = () => {
-	const [workout, setWorkout] = useState([]);
+	const [workouts, setWorkouts] = useState([]);
+
+	const deleteWorkout = (index) => {
+		workouts.splice(index, 1);
+		setWorkouts([...workouts]);
+	};
 
 	useEffect(() => {
 		fire
 			.firestore()
 			.collection("workout")
 			.onSnapshot((snap) => {
-				const workout = snap.docs.map((doc) => ({
+				const workouts = snap.docs.map((doc) => ({
 					id: doc.id,
 					...doc.data(),
 				}));
-				console.log(workout);
-				setWorkout(workout);
+
+				setWorkouts([...workouts]);
 			});
 	}, []);
 
@@ -34,7 +39,7 @@ const Home = () => {
 			</Head>
 			<Container className={Styles.mainContainer}>
 				<h1 className={Styles.mainHeader}>List of Workout Programs</h1>
-				{workout.map((item) => (
+				{workouts.map((item, index) => (
 					<Container key={item.name} className={Styles.workoutContainer}>
 						{/* creating container for every item (object) */}
 						<Row>
@@ -52,7 +57,10 @@ const Home = () => {
 								</Button>{" "}
 							</Col>
 							<Col xs={1}>
-								<Button variant="warning">
+								<Button
+									variant="warning"
+									onClick={(index) => deleteWorkout(index)}
+								>
 									<MdDelete title="delete" />
 								</Button>{" "}
 							</Col>
@@ -60,12 +68,18 @@ const Home = () => {
 					</Container>
 				))}
 				<Container>
-					<Button variant="primary" href="/CreateWorkout">
+					<Button
+						className={Styles.btn}
+						variant="primary"
+						href="/CreateWorkout"
+					>
 						New Workout
 					</Button>{" "}
 					{/*First few items of the List of Workout History*/}
 					{/*View All Workout History Button which directs to the WorkoutHistory page*/}
-					<Button href="/WorkoutHistory">View All</Button>
+					<Button className={Styles.btn} href="/WorkoutHistory">
+						View All
+					</Button>
 				</Container>
 			</Container>
 		</div>

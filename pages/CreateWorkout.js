@@ -5,68 +5,96 @@ import { Form, Button, Container } from "react-bootstrap";
 import ExerciseList from "../components/ExerciseList";
 import ViewWorkoutProgram from "../components/ViewWorkoutProgram";
 import fire from "../config/fire-config";
+import Styles from "../styles/createWorkout.module.css";
 
 export default function CreateWorkout() {
-	const [workout, setWorkout] = useState([]);
+	const [exercises, setExercises] = useState([]);
+	const [workoutName, setWorkoutName] = useState("");
+	const [isClicked, setIsClicked] = useState(false);
+
 	function newExercise(exercise) {
 		console.log(exercise);
-		setWorkout([...workout, exercise]);
+		setExercises([...exercises, exercise]);
 	}
 
-	const editWorkout = (value, index, property) => {
-		workout[index][property] = value;
-		setWorkout([...workout]);
+	const editExercises = (value, index, property) => {
+		exercises[index][property] = value;
+		setExercises([...exercises]);
+	};
+
+	const deleteExercise = (index) => {
+		exercises.splice(index, 1);
+		setExercises([...exercises]);
 	};
 
 	const save = () => {
-		console.log(workout);
 		console.log("before adding");
 		fire
-		.firestore()
-		.collection("workout").add({
-			exercises: [{
-				id: "002",
-				name: "push up",
-				reps: 2,
-				sets: 3,
-				time: 3,
-				weight:5
-		}],
-			id: 2000,
-			name: "Example2"
-
-		}).then(() => {
-			console.log("Document successfully written!");
-		})
-		.catch((error) => {
-			console.error("Error writing document: ", error);
-		});
+			.firestore()
+			.collection("workout")
+			.add({
+				exercises: exercises,
+				name: workoutName,
+			})
+			.then(() => {
+				console.log("Document successfully written!");
+			})
+			.catch((error) => {
+				console.error("Error writing document: ", error);
+			});
 		console.log("after adding to firestore");
-	};
-
-	const onInput = (event) => {//workout has two objects, name(string), exercises(arrays)
-		console.log(event.target.value);
 	};
 
 	return (
 		<>
 			<HamburgerMenu />
 			<Container>
+				<div>
+					<h3 className={Styles.subHeading}>
+						Step 1: Name your workout program{" "}
+					</h3>
+				</div>
 				<Form>
 					<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 						<Form.Control
 							type="email"
-							placeholder="Name Workout"
-							onChange={onInput}
+							placeholder="workout name"
+							onChange={(e) => setWorkoutName(e.target.value)}
 						/>
 					</Form.Group>
 				</Form>
-				<ViewWorkoutProgram workout={workout} editWorkout={editWorkout} />
-				<ExerciseList onAddToWorkout={newExercise} />
-				<Button variant="warning">Cancel</Button>{" "}
-				<Button variant="success" onClick={save}>
-					Save
-				</Button>{" "}
+				<div>
+					<h3 className={Styles.subHeading}>
+						Step 2: Add exercises to your workout and edit details!{" "}
+					</h3>
+				</div>
+				<ViewWorkoutProgram
+					exercises={exercises}
+					editExercises={editExercises}
+					deleteExercise={deleteExercise}
+				/>
+				<Button className={Styles.btn} onClick={() => setIsClicked(!isClicked)}>
+					{isClicked ? "Hide Exercises" : "Add Exercises"}
+				</Button>
+				{isClicked && (
+					<>
+						<ExerciseList onAddToWorkout={newExercise} />
+						<div>
+							<h3 className={Styles.subHeading}>Step 3: Save and enjoy!</h3>
+						</div>
+						<Button
+							className={Styles.btn}
+							href="/success"
+							variant="success"
+							onClick={save}
+						>
+							Save
+						</Button>
+						<Button className={Styles.btn} variant="warning">
+							Cancel
+						</Button>
+					</>
+				)}
 			</Container>
 		</>
 	);
