@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button, Container } from "react-bootstrap";
 import ExerciseList from "../components/ExerciseList";
 import ViewWorkoutProgram from "../components/ViewWorkoutProgram";
+import fire from "../config/fire-config";
 
 export default function CreateWorkout() {
 	const [workout, setWorkout] = useState([]);
@@ -20,7 +21,9 @@ export default function CreateWorkout() {
 	const save = () => {
 		console.log(workout);
 		console.log("before adding");
-		db.collection("workout").add({
+		fire
+		.firestore()
+		.collection("workout").add({
 			exercises: [{
 				id: "002",
 				name: "push up",
