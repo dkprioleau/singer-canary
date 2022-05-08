@@ -3,28 +3,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { MdDelete } from "react-icons/Md";
 
-function ViewWorkoutProgram({ workout, editWorkout }) {
+function ViewWorkoutProgram({ exercises, editExercises, deleteExercise }) {
 	const editSets = (e, index) => {
-		editWorkout(e.target.value, index, "sets");
+		editExercises(e.target.value, index, "sets");
 	};
 	const editReps = (e, index) => {
-		editWorkout(e.target.value, index, "reps");
+		editExercises(e.target.value, index, "reps");
 	};
 	const editWeigh = (e, index) => {
-		editWorkout(e.target.value, index, "weigh");
+		editExercises(e.target.value, index, "weigh");
 	};
 	const editTime = (e, index) => {
-		editWorkout(e.target.value, index, "time");
+		editExercises(e.target.value, index, "time");
 	};
 
 	return (
 		<>
-			<div>
-				<h2>It is time to add exercises to your workout! </h2>
-			</div>
-
 			<Container className="exercises">
-				{workout.length === 0 ? null : (
+				{exercises.length === 0 ? null : (
 					<Row className="exerciseTitles">
 						<Col xs={3}>Exercise</Col>
 						<Col xs={2}>Sets</Col>
@@ -34,7 +30,7 @@ function ViewWorkoutProgram({ workout, editWorkout }) {
 					</Row>
 				)}
 
-				{workout.map((exercise, index) => {
+				{exercises.map((exercise, index) => {
 					return (
 						<Row key={index}>
 							<Col xs={3}>{exercise.name}</Col>
@@ -75,7 +71,12 @@ function ViewWorkoutProgram({ workout, editWorkout }) {
 								</Form.Group>
 							</Col>
 							<Col xs={1}>
-								<Button variant="warning">
+								<Button
+									onClick={() => {
+										deleteExercise(index);
+									}}
+									variant="warning"
+								>
 									<MdDelete title="delete" />
 								</Button>{" "}
 							</Col>
