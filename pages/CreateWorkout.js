@@ -11,6 +11,7 @@ export default function CreateWorkout() {
 	const [exercises, setExercises] = useState([]);
 	const [workoutName, setWorkoutName] = useState("");
 	const [isClicked, setIsClicked] = useState(false);
+	const [workoutFirestoreID, setWorkoutFirestoreID] = useState("");
 
 	function newExercise(exercise) {
 		console.log(exercise);
@@ -27,14 +28,19 @@ export default function CreateWorkout() {
 		setExercises([...exercises]);
 	};
 
+
 	const save = () => {
-		console.log("before adding");
+		console.log(exercises);
+
+	//new workout doesn't have workoutFirestoreID
+	if(workoutFirestoreID=""){
+		//create a new document 
 		fire
 			.firestore()
 			.collection("workout")
 			.add({
-				exercises: exercises,
 				name: workoutName,
+				exercises: exercises
 			})
 			.then(() => {
 				console.log("Document successfully written!");
@@ -42,7 +48,23 @@ export default function CreateWorkout() {
 			.catch((error) => {
 				console.error("Error writing document: ", error);
 			});
-		console.log("after adding to firestore");
+			
+			//fetching the newly created workoutFirestoreID from firestore
+			setWorkoutFirestoreID(
+				fire.firestore().collection("workout").doc().docRef.id
+				)
+        //editing the existing workout
+		}else{
+			fire
+			.firestore()
+			.collection("workout")
+			.doc(workoutFirestoreID).update(
+				{
+					name: workoutName,
+					exercises: exercises
+				}
+			);
+		}
 	};
 
 	return (
