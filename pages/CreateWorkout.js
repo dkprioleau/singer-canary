@@ -13,6 +13,16 @@ export default function CreateWorkout() {
 	const [isClicked, setIsClicked] = useState(false);
 	const [workoutFirestoreID, setWorkoutFirestoreID] = useState("");
 
+	//fetching exercises from firestore
+	if(workoutFirestoreID!=""){
+		fire
+		.firestore()
+		.collection("workout").doc(workoutFirestoreID)
+		.get().then((doc) => {
+			setExercises(doc.data()['exercises'])
+		});
+		}
+	
 	function newExercise(exercise) {
 		console.log(exercise);
 		setExercises([...exercises, exercise]);
@@ -28,12 +38,13 @@ export default function CreateWorkout() {
 		setExercises([...exercises]);
 	};
 
-
+	
 	const save = () => {
 		console.log(exercises);
-
-	//new workout doesn't have workoutFirestoreID
-	if(workoutFirestoreID=""){
+		
+	//create a new workout: doesn't have workoutFirestoreID
+	if(workoutFirestoreID==""){
+	
 		//create a new document 
 		fire
 			.firestore()
@@ -41,20 +52,21 @@ export default function CreateWorkout() {
 			.add({
 				name: workoutName,
 				exercises: exercises
-			})
-			.then(() => {
-				console.log("Document successfully written!");
+			}
+			)
+			.then((docRef) => {
+				console.log("Document successfully written with ID:", docRef.id);
+				setWorkoutFirestoreID(docRef.id);
 			})
 			.catch((error) => {
 				console.error("Error writing document: ", error);
 			});
 			
-			//fetching the newly created workoutFirestoreID from firestore
-			setWorkoutFirestoreID(
-				fire.firestore().collection("workout").doc().docRef.id
-				)
+		
+			
         //editing the existing workout
 		}else{
+			
 			fire
 			.firestore()
 			.collection("workout")
@@ -62,8 +74,11 @@ export default function CreateWorkout() {
 				{
 					name: workoutName,
 					exercises: exercises
+			
 				}
+				
 			);
+			
 		}
 	};
 
@@ -94,6 +109,7 @@ export default function CreateWorkout() {
 					exercises={exercises}
 					editExercises={editExercises}
 					deleteExercise={deleteExercise}
+					workoutFirestoreID = {workoutFirestoreID}
 				/>
 				<Button className={Styles.btn} onClick={() => setIsClicked(!isClicked)}>
 					{isClicked ? "Hide Exercises" : "Add Exercises"}
@@ -106,7 +122,7 @@ export default function CreateWorkout() {
 						</div>
 						<Button
 							className={Styles.btn}
-							href="/success"
+							//href="/success"
 							variant="success"
 							onClick={save}
 						>

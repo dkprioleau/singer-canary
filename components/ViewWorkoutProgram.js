@@ -2,8 +2,14 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
 import { MdDelete } from "react-icons/Md";
+import fire from "../config/fire-config";
 
-function ViewWorkoutProgram({ exercises, editExercises, deleteExercise }) {
+
+function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExercise,workoutFirestoreID }) {
+
+	//rendering existing data
+	
+
 	const editSets = (e, index) => {
 		editExercises(e.target.value, index, "sets");
 	};
@@ -16,6 +22,10 @@ function ViewWorkoutProgram({ exercises, editExercises, deleteExercise }) {
 	const editTime = (e, index) => {
 		editExercises(e.target.value, index, "time");
 	};
+
+
+
+	
 
 	return (
 		<>
