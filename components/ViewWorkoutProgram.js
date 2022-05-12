@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
-import { MdDelete } from "react-icons/Md";
+import { MdDelete } from "react-icons/md";
 import fire from "../config/fire-config";
 
 

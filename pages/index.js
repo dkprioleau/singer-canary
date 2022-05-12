@@ -5,9 +5,9 @@ import HamburgerMenu from "../components/HamburgerMenu";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Row, Col, Container } from "react-bootstrap";
 import { FaPlay } from "react-icons/fa";
-import { GrEdit } from "react-icons/Gr";
-import { MdDelete } from "react-icons/Md";
-import Styles from "../styles/home.module.css";
+import { GrEdit } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
+import Styles from "../styles/Home.module.css";
 
 const Home = () => {
 	const [workouts, setWorkouts] = useState([]);
