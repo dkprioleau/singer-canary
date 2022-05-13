@@ -1,5 +1,5 @@
 import HamburgerMenu from "../components/HamburgerMenu";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button, Container } from "react-bootstrap";
 import ExerciseList from "../components/ExerciseList";
@@ -13,15 +13,18 @@ export default function CreateWorkout() {
 	const [isClicked, setIsClicked] = useState(false);
 	const [workoutFirestoreID, setWorkoutFirestoreID] = useState("");
 
-	//fetching exercises from firestore
-	if(workoutFirestoreID!=""){
-		fire
-		.firestore()
-		.collection("workout").doc(workoutFirestoreID)
-		.get().then((doc) => {
-			setExercises(doc.data()['exercises'])
-		});
+	useEffect(() => {
+		if(workoutFirestoreID!=""){
+			fire
+			.firestore()
+			.collection("workout").doc(workoutFirestoreID)
+			.get().then((doc) => {
+				setExercises(doc.data()['exercises'])
+			});
 		}
+	}, [workoutFirestoreID]);
+	//fetching exercises from firestore
+	
 	
 	function newExercise(exercise) {
 		console.log(exercise);
@@ -46,46 +49,46 @@ export default function CreateWorkout() {
 	const save = () => {
 		console.log(exercises);
 		
-	//create a new workout: doesn't have workoutFirestoreID
-	if(workoutFirestoreID==""){
-	
-		//create a new document 
-		fire
-			.firestore()
-			.collection("workout")
-			.add({
-				name: workoutName,
-				exercises: exercises
-			}
-			)
-			.then((docRef) => {
-				console.log("Document successfully written with ID:", docRef.id);
-				setWorkoutFirestoreID(docRef.id);
-			})
-			.catch((error) => {
-				console.error("Error writing document: ", error);
-			});
-			
+		//create a new workout: doesn't have workoutFirestoreID
+		if(workoutFirestoreID==""){
 		
-			
-        //editing the existing workout
-		}else{
-			
-			// function updateWorkout(workout){
-			// 	setWorkout([...workout,workout])
-			// }
+			//create a new document 
 			fire
-			.firestore()
-			.collection("workout")
-			.doc(workoutFirestoreID).update(
-				{
+				.firestore()
+				.collection("workout")
+				.add({
 					name: workoutName,
 					exercises: exercises
-			
 				}
+				)
+				.then((docRef) => {
+					console.log("Document successfully written with ID:", docRef.id);
+					setWorkoutFirestoreID(docRef.id);
+				})
+				.catch((error) => {
+					console.error("Error writing document: ", error);
+				});
 				
-			);
 			
+				
+					//editing the existing workout
+		}else{
+				
+				// function updateWorkout(workout){
+				// 	setWorkout([...workout,workout])
+				// }
+				fire
+				.firestore()
+				.collection("workout")
+				.doc(workoutFirestoreID).update(
+					{
+						name: workoutName,
+						exercises: exercises
+				
+					}
+					
+				);
+				
 		}
 	};
 
