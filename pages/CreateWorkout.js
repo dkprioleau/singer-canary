@@ -29,8 +29,12 @@ export default function CreateWorkout() {
 	}
 
 	const editExercises = (value, index, property) => {
-		exercises[index][property] = value;
-		setExercises([...exercises]);
+		const newExercises = [...exercises]
+		newExercises[index][property] = value;
+		// exercises[index][property] = value;
+		console.log(exercises[index])
+		setExercises(newExercises);
+		console.log(exercises)
 	};
 
 	const deleteExercise = (index) => {
@@ -38,7 +42,7 @@ export default function CreateWorkout() {
 		setExercises([...exercises]);
 	};
 
-	
+	// const [workout, setWorkout] = useState([exercises]);
 	const save = () => {
 		console.log(exercises);
 		
@@ -67,6 +71,9 @@ export default function CreateWorkout() {
         //editing the existing workout
 		}else{
 			
+			// function updateWorkout(workout){
+			// 	setWorkout([...workout,workout])
+			// }
 			fire
 			.firestore()
 			.collection("workout")
