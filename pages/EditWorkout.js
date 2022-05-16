@@ -16,15 +16,34 @@ export default function CreateWorkout() {
 	const [workoutFirestoreID, setWorkoutFirestoreID] = useState(""); 
 
 
+	useEffect(()=>{ 
+		
+		if(router.isReady){
+		console.log(router.query)
+        setWorkoutFirestoreID(router.query.firebaseId);
+	}
+	
+	},[router.isReady])
+// we need to use router because we are passing the firebaseId
 	
 
-	
+	useEffect(() => {
+		if(workoutFirestoreID!=""){
+			console.log(exercises)
+			console.log(workoutFirestoreID)
+			fire
+			.firestore()
+			.collection("workout").doc(workoutFirestoreID)
+			.get().then((doc) => {
+				console.log(doc.data());
+				setExercises(doc.data()['exercises'])
+				setWorkoutName(doc.data()['name'])
+			});
+		}
+	}, [workoutFirestoreID]);
+	//fetching exercises from firestore  
 
-	
-	
 
-	
-	
 
 	function newExercise(exercise) {
 		console.log(exercise);
@@ -135,10 +154,7 @@ export default function CreateWorkout() {
 						<div>
 							<h3 className={Styles.subHeading}>Step 3: Save and enjoy!</h3>
 						</div>
-						
-					</>
-					
-				)}<Button
+						<Button
 							className={Styles.btn}
 							//href="/success"
 							variant="success"
@@ -149,6 +165,8 @@ export default function CreateWorkout() {
 						<Button className={Styles.btn} variant="warning">
 							Cancel
 						</Button>
+					</>
+				)}
 			</Container>
 		</>
 	);

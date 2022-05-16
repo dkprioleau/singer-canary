@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/Md";
 import fire from "../config/fire-config";
 
 
-function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExercise,workoutFirestoreID }) {
+function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExercise,workoutFirestoreID}) {
 
 	//rendering existing data
 	
@@ -24,7 +24,12 @@ function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExer
 	};
 
 
-
+// 	function loadStorage(){ 
+// 		const loadData = 
+// 	   if(localStorage !== ""){ 
+// 	   return	JSON.parse(localData)
+// 	   }
+//    }
 	
 
 	return (
@@ -35,7 +40,7 @@ function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExer
 						<Col xs={3}>Exercise</Col>
 						<Col xs={2}>Sets</Col>
 						<Col xs={2}>Reps</Col>
-						<Col xs={2}>Weigh(lb)</Col>
+						<Col xs={2}>Weight(lb)</Col>
 						<Col xs={2}>Time(second)</Col>
 					</Row>
 				)}
@@ -50,6 +55,7 @@ function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExer
 										onChange={(e) => editSets(e, index)}
 										type="number"
 										placeholder="0"
+										value= {exercise.sets}
 									/>
 								</Form.Group>
 							</Col>
@@ -59,6 +65,7 @@ function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExer
 										onChange={(e) => editReps(e, index)}
 										type="number"
 										placeholder="0"
+										value= {exercise.reps}
 									/>
 								</Form.Group>
 							</Col>
@@ -68,6 +75,7 @@ function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExer
 										onChange={(e) => editWeigh(e, index)}
 										type="number"
 										placeholder="0"
+										value= {exercise.weigh}
 									/>
 								</Form.Group>
 							</Col>
@@ -77,6 +85,7 @@ function ViewWorkoutProgram({ exercises, setExercises, editExercises, deleteExer
 										onChange={(e) => editTime(e, index)}
 										type="number"
 										placeholder="0"
+										value= {exercise.time}
 									/>
 								</Form.Group>
 							</Col>
